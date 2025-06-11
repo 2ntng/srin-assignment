@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  base: '/srin-assignment/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets'
+  }
 })
