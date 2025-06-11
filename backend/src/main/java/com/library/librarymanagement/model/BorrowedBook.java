@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -15,13 +15,11 @@ public class BorrowedBook {
 
     @Id
     private String id;
-
     @DBRef
-    @JsonBackReference("book-borrowedBooks")
+    @JsonIgnoreProperties("borrowedBooks")
     private Book book;
-
     @DBRef
-    @JsonBackReference("member-borrowedBooks")
+    @JsonIgnoreProperties("borrowedBooks")
     private Member member;
 
     @NotNull(message = "Borrow date is required")

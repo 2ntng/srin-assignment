@@ -25,9 +25,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/borrowed-books")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"},
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:5173",
+        "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
 public class BorrowedBookController {
 
     @Autowired
@@ -55,7 +54,8 @@ public class BorrowedBookController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<BorrowedBook> createBorrowedBook(@Valid @RequestBody BorrowedBook borrowedBook, HttpServletRequest request) {
+    public ResponseEntity<BorrowedBook> createBorrowedBook(@Valid @RequestBody BorrowedBook borrowedBook,
+            HttpServletRequest request) {
         System.out.println("[DEBUG] POST /api/borrowed-books Content-Type: " + request.getContentType());
         try {
             BorrowedBook savedBorrowedBook = borrowedBookService.borrowBook(borrowedBook);
@@ -66,7 +66,8 @@ public class BorrowedBookController {
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<BorrowedBook> updateBorrowedBook(@PathVariable String id, @Valid @RequestBody BorrowedBook borrowedBookDetails, HttpServletRequest request) {
+    public ResponseEntity<BorrowedBook> updateBorrowedBook(@PathVariable String id,
+            @Valid @RequestBody BorrowedBook borrowedBookDetails, HttpServletRequest request) {
         System.out.println("[DEBUG] PUT /api/borrowed-books/" + id + " Content-Type: " + request.getContentType());
         try {
             Optional<BorrowedBook> existingBorrowedBook = borrowedBookService.findById(id);

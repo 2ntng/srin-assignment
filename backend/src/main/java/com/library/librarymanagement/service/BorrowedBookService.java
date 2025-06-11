@@ -7,8 +7,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.library.librarymanagement.model.Book;
 import com.library.librarymanagement.model.BorrowedBook;
+import com.library.librarymanagement.model.Member;
+import com.library.librarymanagement.repository.BookRepository;
 import com.library.librarymanagement.repository.BorrowedBookRepository;
+import com.library.librarymanagement.repository.MemberRepository;
 
 @Service
 public class BorrowedBookService {
@@ -19,12 +23,29 @@ public class BorrowedBookService {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     public List<BorrowedBook> findAll() {
-        return borrowedBookRepository.findAll();
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository.findAll();
+        // Populate book and member for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
     }
 
     public Optional<BorrowedBook> findById(String id) {
-        return borrowedBookRepository.findById(id);
+        Optional<BorrowedBook> borrowedBookOpt = borrowedBookRepository.findById(id);
+        if (borrowedBookOpt.isPresent()) {
+            BorrowedBook borrowedBook = borrowedBookOpt.get();
+            populateRelationships(borrowedBook);
+            return Optional.of(borrowedBook);
+        }
+        return Optional.empty();
     }
 
     public BorrowedBook save(BorrowedBook borrowedBook) {
@@ -64,22 +85,64 @@ public class BorrowedBookService {
     }
 
     public List<BorrowedBook> searchBorrowedBooks(String keyword) {
-        return borrowedBookRepository.findByBookTitleContainingIgnoreCaseOrMemberNameContainingIgnoreCaseOrBorrowDate(keyword);
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository
+                .findByBookTitleContainingIgnoreCaseOrMemberNameContainingIgnoreCaseOrBorrowDate(keyword);
+        // Populate relationships for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
     }
 
     public List<BorrowedBook> findActiveBorrowings() {
-        return borrowedBookRepository.findByReturnDateIsNull();
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository.findByReturnDateIsNull();
+        // Populate relationships for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
     }
 
     public List<BorrowedBook> findOverdueBooks() {
-        return borrowedBookRepository.findByDueDateBeforeAndReturnDateIsNull(LocalDate.now());
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository
+                .findByDueDateBeforeAndReturnDateIsNull(LocalDate.now());
+        // Populate relationships for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
     }
 
     public List<BorrowedBook> findByMemberId(String memberId) {
-        return borrowedBookRepository.findByMemberId(memberId);
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository.findByMemberId(memberId);
+        // Populate relationships for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
     }
 
     public List<BorrowedBook> findByBookId(String bookId) {
-        return borrowedBookRepository.findByBookId(bookId);
+        List<BorrowedBook> borrowedBooks = borrowedBookRepository.findByBookId(bookId);
+        // Populate relationships for each borrowed book
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            populateRelationships(borrowedBook);
+        }
+        return borrowedBooks;
+    }
+
+    private void populateRelationships(BorrowedBook borrowedBook) {
+        if (borrowedBook != null) {
+            // Use existing repository methods to find and populate relationships
+            if (borrowedBook.getBook() != null && borrowedBook.getBook().getId() != null) {
+                Optional<Book> bookOpt = bookRepository.findById(borrowedBook.getBook().getId());
+                bookOpt.ifPresent(borrowedBook::setBook);
+            }
+
+            if (borrowedBook.getMember() != null && borrowedBook.getMember().getId() != null) {
+                Optional<Member> memberOpt = memberRepository.findById(borrowedBook.getMember().getId());
+                memberOpt.ifPresent(borrowedBook::setMember);
+            }
+        }
     }
 }

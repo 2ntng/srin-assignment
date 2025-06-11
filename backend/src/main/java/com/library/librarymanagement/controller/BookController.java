@@ -25,9 +25,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"},
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:5173",
+        "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
 public class BookController {
 
     @Autowired
@@ -66,7 +65,8 @@ public class BookController {
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @Valid @RequestBody Book bookDetails, HttpServletRequest request) {
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @Valid @RequestBody Book bookDetails,
+            HttpServletRequest request) {
         System.out.println("[DEBUG] PUT /api/books/" + id + " Content-Type: " + request.getContentType());
         try {
             Optional<Book> existingBook = bookService.findById(id);

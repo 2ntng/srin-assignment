@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -28,9 +28,8 @@ public class Member {
 
     private String phone;
     private String address;
-
     @DBRef
-    @JsonManagedReference("member-borrowedBooks")
+    @JsonIgnoreProperties({ "book", "member" })
     private List<BorrowedBook> borrowedBooks;
 
     // Constructors

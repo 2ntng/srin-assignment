@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.library.librarymanagement.model.Author;
+import com.library.librarymanagement.model.Book;
 import com.library.librarymanagement.repository.AuthorRepository;
+import com.library.librarymanagement.repository.BookRepository;
 
 @Service
 public class AuthorService {
@@ -15,12 +17,26 @@ public class AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private BookRepository bookRepository;
+
     public List<Author> findAll() {
-        return authorRepository.findAll();
+        List<Author> authors = authorRepository.findAll();
+        // Populate books for each author
+        for (Author author : authors) {
+            populateBooks(author);
+        }
+        return authors;
     }
 
     public Optional<Author> findById(String id) {
-        return authorRepository.findById(id);
+        Optional<Author> authorOpt = authorRepository.findById(id);
+        if (authorOpt.isPresent()) {
+            Author author = authorOpt.get();
+            populateBooks(author);
+            return Optional.of(author);
+        }
+        return Optional.empty();
     }
 
     public Author save(Author author) {
@@ -32,10 +48,30 @@ public class AuthorService {
     }
 
     public List<Author> searchAuthors(String keyword) {
-        return authorRepository.findByNameContainingIgnoreCaseOrNationalityContainingIgnoreCase(keyword, keyword);
+        List<Author> authors = authorRepository.findByNameContainingIgnoreCaseOrNationalityContainingIgnoreCase(keyword,
+                keyword);
+        // Populate books for each author
+        for (Author author : authors) {
+            populateBooks(author);
+        }
+        return authors;
     }
 
     public Optional<Author> findByIdWithBooks(String id) {
-        return authorRepository.findByIdWithBooks(id);
+        Optional<Author> authorOpt = authorRepository.findById(id);
+        if (authorOpt.isPresent()) {
+            Author author = authorOpt.get();
+            populateBooks(author);
+            return Optional.of(author);
+        }
+        return Optional.empty();
+    }
+
+    private void populateBooks(Author author) {
+        if (author != null && author.getId() != null) {
+            // Find books by author using existing repository method
+            List<Book> books = bookRepository.findByAuthorId(author.getId());
+            author.setBooks(books);
+        }
     }
 }

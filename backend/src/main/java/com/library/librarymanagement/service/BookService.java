@@ -6,8 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.library.librarymanagement.model.Author;
 import com.library.librarymanagement.model.Book;
+import com.library.librarymanagement.model.BorrowedBook;
+import com.library.librarymanagement.repository.AuthorRepository;
 import com.library.librarymanagement.repository.BookRepository;
+import com.library.librarymanagement.repository.BorrowedBookRepository;
 
 @Service
 public class BookService {
@@ -15,12 +19,29 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
+    private BorrowedBookRepository borrowedBookRepository;
+
     public List<Book> findAll() {
-        return bookRepository.findAll();
+        List<Book> books = bookRepository.findAll();
+        // Populate author and borrowed books for each book
+        for (Book book : books) {
+            populateRelationships(book);
+        }
+        return books;
     }
 
     public Optional<Book> findById(String id) {
-        return bookRepository.findById(id);
+        Optional<Book> bookOpt = bookRepository.findById(id);
+        if (bookOpt.isPresent()) {
+            Book book = bookOpt.get();
+            populateRelationships(book);
+            return Optional.of(book);
+        }
+        return Optional.empty();
     }
 
     public Book save(Book book) {
@@ -35,15 +56,30 @@ public class BookService {
     }
 
     public List<Book> searchBooks(String keyword) {
-        return bookRepository.findByKeyword(keyword);
+        List<Book> books = bookRepository.findByKeyword(keyword);
+        // Populate relationships for each book
+        for (Book book : books) {
+            populateRelationships(book);
+        }
+        return books;
     }
 
     public List<Book> findAvailableBooks() {
-        return bookRepository.findByAvailableCopiesGreaterThan(0);
+        List<Book> books = bookRepository.findByAvailableCopiesGreaterThan(0);
+        // Populate relationships for each book
+        for (Book book : books) {
+            populateRelationships(book);
+        }
+        return books;
     }
 
     public List<Book> findByAuthorId(String authorId) {
-        return bookRepository.findByAuthorId(authorId);
+        List<Book> books = bookRepository.findByAuthorId(authorId);
+        // Populate relationships for each book
+        for (Book book : books) {
+            populateRelationships(book);
+        }
+        return books;
     }
 
     public void decreaseAvailableCopies(String bookId) {
@@ -65,6 +101,20 @@ public class BookService {
         if (book.getAvailableCopies() < book.getTotalCopies()) {
             book.setAvailableCopies(book.getAvailableCopies() + 1);
             bookRepository.save(book);
+        }
+    }
+
+    private void populateRelationships(Book book) {
+        if (book != null) {
+            // Populate author using repository
+            if (book.getAuthor() != null && book.getAuthor().getId() != null) {
+                Optional<Author> authorOpt = authorRepository.findById(book.getAuthor().getId());
+                authorOpt.ifPresent(book::setAuthor);
+            }
+
+            // Populate borrowed books using repository
+            List<BorrowedBook> borrowedBooks = borrowedBookRepository.findByBookId(book.getId());
+            book.setBorrowedBooks(borrowedBooks);
         }
     }
 }

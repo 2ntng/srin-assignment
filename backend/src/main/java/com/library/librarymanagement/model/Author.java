@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -21,9 +21,8 @@ public class Author {
 
     private String biography;
     private String nationality;
-
     @DBRef
-    @JsonManagedReference("author-books")
+    @JsonIgnoreProperties("author")
     private List<Book> books;
 
     // Constructors

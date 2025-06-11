@@ -25,9 +25,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/members")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"},
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:5173",
+        "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
 public class MemberController {
 
     @Autowired
@@ -66,7 +65,8 @@ public class MemberController {
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Member> updateMember(@PathVariable String id, @Valid @RequestBody Member memberDetails, HttpServletRequest request) {
+    public ResponseEntity<Member> updateMember(@PathVariable String id, @Valid @RequestBody Member memberDetails,
+            HttpServletRequest request) {
         System.out.println("[DEBUG] PUT /api/members/" + id + " Content-Type: " + request.getContentType());
         try {
             Optional<Member> existingMember = memberService.findById(id);

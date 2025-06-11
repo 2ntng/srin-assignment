@@ -25,9 +25,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/authors")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"},
-        allowedHeaders = "*",
-        allowCredentials = "true")
+@CrossOrigin(origins = { "http://localhost:5173",
+        "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
 public class AuthorController {
 
     @Autowired
@@ -66,7 +65,8 @@ public class AuthorController {
     }
 
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Author> updateAuthor(@PathVariable String id, @Valid @RequestBody Author authorDetails, HttpServletRequest request) {
+    public ResponseEntity<Author> updateAuthor(@PathVariable String id, @Valid @RequestBody Author authorDetails,
+            HttpServletRequest request) {
         System.out.println("[DEBUG] PUT /api/authors/" + id + " Content-Type: " + request.getContentType());
         try {
             Optional<Author> existingAuthor = authorService.findById(id);

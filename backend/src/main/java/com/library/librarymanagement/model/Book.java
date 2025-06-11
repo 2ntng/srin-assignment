@@ -6,8 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,13 +29,11 @@ public class Book {
     private String isbn;
     private Integer totalCopies;
     private Integer availableCopies;
-
     @DBRef
-    @JsonBackReference("author-books")
+    @JsonIgnoreProperties("books")
     private Author author;
-
     @DBRef
-    @JsonManagedReference("book-borrowedBooks")
+    @JsonIgnoreProperties({ "book", "member" })
     private List<BorrowedBook> borrowedBooks;
 
     // Constructors
