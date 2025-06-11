@@ -1,16 +1,14 @@
 services:
   - type: web
     name: backend-service
-    env: java
-    buildCommand: ./mvnw clean install
-    startCommand: java -jar target/*.jar
+    runtime: docker
     rootDir: backend
     plan: free
 
   - type: web
     name: frontend-service
-    env: static
+    runtime: static
+    rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: build
-    rootDir: frontend
     plan: free
