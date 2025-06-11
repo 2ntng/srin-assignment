@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useLibrary } from "../context/LibraryContext";
 import { BookOpen, Users, UserCheck, BookMarked, AlertCircle } from "lucide-react";
 
@@ -159,8 +160,8 @@ const Dashboard = () => {
                     <div className="p-4 sm:p-6">
                         <div className="space-y-3">
                             {" "}
-                            <a
-                                href="/books"
+                            <Link
+                                to="/books"
                                 className="block w-full text-left px-4 py-3 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="flex items-center space-x-3">
@@ -169,9 +170,9 @@ const Dashboard = () => {
                                         Manage Books
                                     </span>
                                 </div>
-                            </a>{" "}
-                            <a
-                                href="/authors"
+                            </Link>{" "}
+                            <Link
+                                to="/authors"
                                 className="block w-full text-left px-4 py-3 bg-green-50 dark:bg-green-900/30 hover:bg-green-100 dark:hover:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="flex items-center space-x-3">
@@ -180,9 +181,9 @@ const Dashboard = () => {
                                         Manage Authors
                                     </span>
                                 </div>
-                            </a>{" "}
-                            <a
-                                href="/members"
+                            </Link>{" "}
+                            <Link
+                                to="/members"
                                 className="block w-full text-left px-4 py-3 bg-purple-50 dark:bg-purple-900/30 hover:bg-purple-100 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="flex items-center space-x-3">
@@ -191,9 +192,9 @@ const Dashboard = () => {
                                         Manage Members
                                     </span>
                                 </div>
-                            </a>{" "}
-                            <a
-                                href="/borrowed-books"
+                            </Link>{" "}
+                            <Link
+                                to="/borrowed-books"
                                 className="block w-full text-left px-4 py-3 bg-orange-50 dark:bg-orange-900/30 hover:bg-orange-100 dark:hover:bg-orange-900/50 text-orange-700 dark:text-orange-300 rounded-lg transition-colors cursor-pointer"
                             >
                                 <div className="flex items-center space-x-3">
@@ -202,7 +203,7 @@ const Dashboard = () => {
                                         Manage Borrowed Books
                                     </span>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
