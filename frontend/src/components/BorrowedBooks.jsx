@@ -186,7 +186,7 @@ const BorrowedBooks = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white">
                     Borrowed Books Management
-                </h1>{" "}
+                </h1>
                 <button
                     onClick={() => setShowModal(true)}
                     className="flex items-center justify-center space-x-2 bg-orange-600 hover:bg-orange-700 dark:bg-orange-700 dark:hover:bg-orange-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-all duration-200 w-full sm:w-auto text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
@@ -198,7 +198,7 @@ const BorrowedBooks = () => {
             {/* Search Bar */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-4 lg:p-6">
                 <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-4 w-4 sm:h-5 sm:w-5" />{" "}
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-4 w-4 sm:h-5 sm:w-5" />
                     <input
                         type="text"
                         placeholder="Search by book title, member name, or borrow date..."
@@ -212,7 +212,7 @@ const BorrowedBooks = () => {
                         </div>
                     )}
                 </div>
-            </div>{" "}
+            </div>
             {/* Tabs */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="border-b border-gray-200 dark:border-gray-700">
@@ -286,17 +286,16 @@ const BorrowedBooks = () => {
                                                 <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 dark:text-gray-500 mr-3" />
                                                 <div>
                                                     <div className="text-sm font-medium text-gray-900 dark:text-white">
-                                                        {/* ... */}
                                                         {borrowedBook.book?.title || "Unknown Book"}
-                                                    </div>{" "}
+                                                    </div>
                                                     <div className="text-sm text-gray-500 dark:text-gray-400">
-                                                        by{" "}
+                                                        by
                                                         {borrowedBook.book?.author?.name ||
                                                             "Unknown Author"}
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>{" "}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <User className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-3" />
@@ -310,7 +309,7 @@ const BorrowedBooks = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>{" "}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                             <div className="flex items-center">
                                                 <Calendar className="h-4 w-4 text-gray-400 dark:text-gray-500 mr-2" />
@@ -344,7 +343,7 @@ const BorrowedBooks = () => {
                                                     Not returned
                                                 </span>
                                             )}
-                                        </td>{" "}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {borrowedBook.returnDate ? (
                                                 <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
@@ -352,7 +351,7 @@ const BorrowedBooks = () => {
                                                 </span>
                                             ) : isOverdue(borrowedBook.dueDate) ? (
                                                 <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
-                                                    Overdue ({getDaysOverdue(borrowedBook.dueDate)}{" "}
+                                                    Overdue ({getDaysOverdue(borrowedBook.dueDate)}
                                                     days)
                                                 </span>
                                             ) : (
@@ -373,7 +372,7 @@ const BorrowedBooks = () => {
                                                     >
                                                         <RotateCcw className="h-4 w-4" />
                                                     </button>
-                                                )}{" "}
+                                                )}
                                                 <button
                                                     onClick={() => handleDelete(borrowedBook.id)}
                                                     className="text-red-600 hover:text-red-800 dark:hover:text-red-400 cursor-pointer"
@@ -401,7 +400,7 @@ const BorrowedBooks = () => {
                         </p>
                     </div>
                 )}
-            </div>{" "}
+            </div>
             {/* Modal */}
             <Modal isOpen={showModal} onClose={resetForm} title="New Book Borrowing" size="md">
                 <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5">
@@ -479,14 +478,13 @@ const BorrowedBooks = () => {
                     </div>
 
                     <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                        {" "}
                         <button
                             type="button"
                             onClick={resetForm}
                             className="w-full sm:flex-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 py-2.5 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-all duration-200 text-sm sm:text-base font-medium cursor-pointer"
                         >
                             Cancel
-                        </button>{" "}
+                        </button>
                         <button
                             type="submit"
                             disabled={loading}
