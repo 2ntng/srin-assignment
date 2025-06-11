@@ -4,11 +4,3 @@ services:
     runtime: docker
     rootDir: backend
     plan: free
-
-  - type: web
-    name: frontend-service
-    runtime: static
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: build
-    plan: free
