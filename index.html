@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/srin-assignment/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Management</title>
+  <script>
+    // Initialize theme before React loads to prevent flash
+    const theme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (theme === 'dark' || (!theme && prefersDark)) {
+      document.querySelector('html').classList.add('dark');
+      document.querySelector('html').style.colorScheme = 'dark';
+    } else {
+      document.querySelector('html').classList.remove('dark');
+      document.querySelector('html').style.colorScheme = 'light';
+    }
+    
+    // GitHub Pages SPA redirect handler
+    (function(l) {
+      if (l.search[1] === '/' ) {
+        var decoded = l.search.slice(1).split('&').map(function(s) { 
+          return s.replace(/~and~/g, '&')
+        }).join('?');
+        window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    }(window.location))
+  </script>
+  <script type="module" crossorigin src="/srin-assignment/assets/index-BcgIkLVV.js"></script>
+  <link rel="stylesheet" crossorigin href="/srin-assignment/assets/index-nun1NP8W.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>
