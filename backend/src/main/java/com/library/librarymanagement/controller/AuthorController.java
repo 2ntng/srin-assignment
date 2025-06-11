@@ -25,8 +25,9 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/authors")
-@CrossOrigin(origins = { "http://localhost:5173",
-        "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000", "https://2ntng.github.io", "https://backend-service-1rrm.onrender.com"}, 
+             allowCredentials = "true",
+             maxAge = 3600)
 public class AuthorController {
 
     @Autowired
