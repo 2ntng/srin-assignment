@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
@@ -13,7 +13,7 @@ function App() {
     return (
         <ThemeProvider>
             <LibraryProvider>
-                <Router basename="/srin-assignment">
+                <Router>
                     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col">
                         <Navbar />
                         <main className="container mx-auto px-4 py-6 sm:py-8 flex-grow">
@@ -27,7 +27,7 @@ function App() {
                         </main>
                         <footer className="text-center text-gray-500 dark:text-gray-400 py-4 mt-auto">
                             <div className="text-gray-600 dark:text-gray-400 text-sm">
-                                &copy; {new Date().getFullYear()}{" "}
+                                &copy; {new Date().getFullYear()}{". "}
                                 <a
                                     href="https://2ntng.github.io/"
                                     className="hover:underline font-semibold"
